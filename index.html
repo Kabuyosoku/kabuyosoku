@@ -1,0 +1,57 @@
+
+<!doctype html>
+<html>
+  <center style="position:absolute; top: 20%; left:0%;width: 100%">下のボックスに昨日の最高値と今日の始値を入力してください。</center>
+  <input type="text" id="input1" placeholder="昨日の最高値を入力してください。" style="position:absolute; top: 35%; left:35%;height: 5%;width: 30%;">
+  <input type="text" id="input2" placeholder="今日の始値を入力してください。" style="position:absolute; top: 42.5%; left:35%;height: 5%;width: 30%;">
+  <button py-click="Go()" style="position:absolute; top: 50%; left:35%;height: 5%;width: 30%;">これが実行ボタンだよ！！</button>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <script>
+    </script>
+  </head>
+  <body>
+    <section>
+      <py-config>
+        packages = ["pandas", "numpy", "scikit-learn"]
+      </py-config>
+      <script type="py">
+        import pandas as pd
+        import numpy as np
+        from sklearn.model_selection import train_test_split
+        from sklearn.ensemble import RandomForestClassifier
+        Input1 = []
+        Input2 = []
+        A = 2
+        Output = []
+        def gakusyuu():
+          X = dict(A1=Input1,A2=Input2)
+          X = pd.DataFrame(data=X)
+          y = dict(Output=Output)
+          y = pd.DataFrame(data=y)
+          y = np.ravel(y)
+          X_train,X_test,y_train,y_test = train_test_split(
+            X,y,test_size=0.2,random_state=777
+          )
+          clf = RandomForestClassifier(random_state=777)
+          clf.fit(X_train,y_train)
+          pred = clf.predict(X_test)
+          return clf
+        def yosoku(clf,Input1,Input2):
+          X_test = dict(A1=Input1,A2=Input2)
+          X_test = pd.DataFrame(data=X_test)
+          if clf.predict(X_test) == 0:
+            print("株は買うべきではありません。")
+          else:
+            print("株は買うべきです。")
+        print("ここに予測結果が出力されます。")
+        def Go():
+          a = Element("input1")
+          b = Element("input2")
+          yosoku(gakusyuu(),[a.value],[b.value])
+      </script>
+    </section>
+  </body>
+</html>
