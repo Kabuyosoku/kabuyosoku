@@ -46,10 +46,11 @@
           else:
             print("株は買うべきです。")
         print("ここに予測結果が出力されます。")
+        clf = gakusyuu()
         def Go():
           a = Element("input1")
           b = Element("input2")
-          yosoku(gakusyuu(),[a.value],[b.value])
+          yosoku(clf,[a.value],[b.value])
       </script>
     </section>
   </body>
