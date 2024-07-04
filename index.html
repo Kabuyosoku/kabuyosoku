@@ -51,8 +51,6 @@
           return clf
         def yosoku(Input1,Input2):
           D = 3
-          Input1 = [Input1]
-          Input2 = [Input2]
           X_test = dict(A1=Input1, A2=Input2)
           X_test = pd.DataFrame(data=X_test)
           Output = clf.predict(X_test)
