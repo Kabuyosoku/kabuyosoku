@@ -50,16 +50,13 @@
           print(test)
           return clf
         def yosoku(clf,Input1,Input2):
-          data = yf.download(ticker, period='max', interval="1d")
-
           D = 3
-          Input1 = [int(data["High"].iloc[len(data["High"]) - 3-D] * 100) / 100]
-          Input2 = [int(data["Open"].iloc[len(data["Open"]) - 2-D] * 100) / 100]
-          print([int(data["Open"].iloc[len(data["Open"]) - 1-D] * 100) / 100])
+          Input1 = [Input1]
+          Input2 = [Input2]
           X_test = dict(A1=Input1, A2=Input2)
           X_test = pd.DataFrame(data=X_test)
           Output = clf.predict(X_test)
-          print(Output/([int(data["Open"].iloc[len(data["Open"]) - 1-D] * 100) / 100]))
+          print(Output)
           return (Output)
         print("ここに予測結果が出力されます。")
         gakusyuu()
