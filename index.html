@@ -3,64 +3,60 @@
   <center style="position:absolute; top: 20%; left:0%;width: 100%">下のボックスに昨日の終値と今日の始値を入力してください。</center>
   <input type="text" id="input1" placeholder="昨日の終値を入力してください。" style="position:absolute; top: 30%; left:35%;height: 5%;width: 30%;">
   <input type="text" id="input2" placeholder="今日の始値を入力してください。" style="position:absolute; top: 37.5%; left:35%;height: 5%;width: 30%;">
-  <button py-click="Go()" class="py-button" style="position:absolute; top: 45%; left:35%;height: 5%;width: 30%;">これが実行ボタンだよ！！</button>
+  <button onclick="Go()" class="py-button" style="position:absolute; top: 45%; left:35%;height: 5%;width: 30%;">これが実行ボタンだよ！！</button>
   <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    <script>
-    </script>
   </head>
   <body>
     <section>
-      <script type="py">
-        def main(x,y,z):
-          az = []
-          a = 0
-          T = len(x)
-          for i in range(T):
-            Ax = x[i]
-            Ay = y[i]
-            Az = z[i]
-            Temp = ((Ax-Az)-(Ay-Az))/((Ax-Az)+(Ay-Az)+0.000001)
-            if Temp == 0:
-              T += -1
-            else:
-              a += Temp
-          a = a/T
+      <script>
+        function main(x, y, z) {
+          let a = 0;
+          let T = x.length;
+          for (let i = 0; i < T; i++) {
+            let Ax = x[i];
+            let Ay = y[i];
+            let Az = z[i];
+            let Temp = ((Ax - Az) - (Ay - Az)) / ((Ax - Az) + (Ay - Az) + 0.000001);
+            if (Temp !== 0) {
+              a += Temp;
+            }
+          }
+          a = a / T;
 
-          T = len(x)
-          b = 0
-          Z = []
-          for i in range(T):
-            Ax = x[i]
-            Ay = y[i]
-            Az = (((((y[i]*(1+a))-(x[i]*(1-a)))/(2*a))*2)-x[i])
-            Temp = ((Ax-Az)-(Ay-Az))/((Ax-Az)+(Ay-Az)+0.000001)  
-            if Temp == 0:
-              T += -1
-            else:
-              b += Temp
-          b = b/T
-          return a,b
-        def yosoku(x,y,a,b):
-          z1 = ((y*(1+a))-(x*(1-a)))/(2*a)
-          z2 = ((y*(1+b))-(x*(1-b)))/(2*b)
-          z3 = (z1+z2)/2
-          return(z3)
-        x = [1,2,3]
-        y = [2,3,4]
-        z = [3,4,5]
-        a = main(x,y,z)[0]
-        b = main(x,y,z)[1]
-        def Go():
-          a1 = Element("input1")
-          b1 = Element("input2")
-          global Input3
-          global Input4
-          Input3 = [a1.value]
-          Input4 = [b1.value]
-          print(yosoku(Input3,Input4,a,b))
+          let b = 0;
+          for (let i = 0; i < T; i++) {
+            let Ax = x[i];
+            let Ay = y[i];
+            let Az = ((((y[i] * (1 + a)) - (x[i] * (1 - a))) / (2 * a)) * 2) - x[i];
+            let Temp = ((Ax - Az) - (Ay - Az)) / ((Ax - Az) + (Ay - Az) + 0.000001);
+            if (Temp !== 0) {
+              b += Temp;
+            }
+          }
+          b = b / T;
+          return [a, b];
+        }
+
+        function yosoku(x, y, a, b) {
+          let z1 = ((y * (1 + a)) - (x * (1 - a))) / (2 * a);
+          let z2 = ((y * (1 + b)) - (x * (1 - b))) / (2 * b);
+          let z3 = (z1 + z2) / 2;
+          return z3;
+        }
+
+        let x = [1, 2, 3];
+        let y = [2, 3, 4];
+        let z = [3, 4, 5];
+        let [a, b] = main(x, y, z);
+
+        function Go() {
+          let a1 = document.getElementById("input1").value;
+          let b1 = document.getElementById("input2").value;
+          let Input3 = [parseFloat(a1)];
+          let Input4 = [parseFloat(b1)];
+          console.log(yosoku(Input3, Input4, a, b));
+        }
       </script>
     </section>
   </body>
